@@ -7,8 +7,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -18,11 +22,14 @@ import android.widget.RemoteViews;
  */
 public class NotificationService extends Service {
     public static final String TAG = "notification service";
+    public static final int NOTIFICATION_ID = 1001;
+
+    private static final String MOBILE_DATA_CHANGED_ACTION = "android.demo.intent.mobile_data_changed";
 
     private WifiManager mWifiManager;
+    private ConnectivityManager mConnectivityManager;
 
     private Notification mNotification;
-    private NotificationCompat.Builder mBuilder;
     private RemoteViews mContentView;
 
     private ChangedReceiver mChangeReceiver;
@@ -38,7 +45,13 @@ public class NotificationService extends Service {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        intentFilter.addAction(NotificationService.MOBILE_DATA_CHANGED_ACTION);
         registerReceiver(mChangeReceiver, intentFilter);
+
+        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        MobileDataObserver dataObserver = new MobileDataObserver(this, new Handler());
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor("mobile_data"), false, dataObserver);
 
         startNotification();
     }
@@ -72,16 +85,32 @@ public class NotificationService extends Service {
     private void checkWifiStatus() {
         int state = mWifiManager.getWifiState();
         if (state == WifiManager.WIFI_STATE_ENABLED) {
+            Log.d(TAG, "wifi enabled");
+
             mContentView.setTextColor(R.id.textwifi, getResources().getColor(R.color.tool_on_text));
             mContentView.setImageViewResource(R.id.imagewifi, R.drawable.wifi_on);
         } else if (state == WifiManager.WIFI_STATE_DISABLED) {
+            Log.d(TAG, "wifi disabled");
+
             mContentView.setTextColor(R.id.textwifi, getResources().getColor(R.color.tool_text));
             mContentView.setImageViewResource(R.id.imagewifi, R.drawable.wifi);
         }
     }
 
     private void checkGPRSStatus() {
+        Boolean enabled = Util.getMobileDataEnabled(mConnectivityManager);
 
+        if (enabled) {
+            Log.d(TAG, "gprs enabled");
+
+            mContentView.setTextColor(R.id.textgprs, getResources().getColor(R.color.tool_on_text));
+            mContentView.setImageViewResource(R.id.imagegprs, R.drawable.gprs_on);
+        } else {
+            Log.d(TAG, "gprs disabled");
+
+            mContentView.setTextColor(R.id.textgprs, getResources().getColor(R.color.tool_text));
+            mContentView.setImageViewResource(R.id.imagegprs, R.drawable.gprs);
+        }
     }
 
     private void checkRingerStatus() {
@@ -93,7 +122,7 @@ public class NotificationService extends Service {
     }
 
     private void startNotification() {
-        mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_launcher);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_launcher);
         mContentView = new RemoteViews(getPackageName(), R.layout.notify_page);
 
         Intent wifiIntent = new Intent();
@@ -132,14 +161,38 @@ public class NotificationService extends Service {
 
         mBuilder.setContent(mContentView);
         mNotification = mBuilder.build();
-        startForeground(1001, mNotification);
+        startForeground(NOTIFICATION_ID, mNotification);
     }
 
-    public class ChangedReceiver extends BroadcastReceiver {
+    class ChangedReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
+            String action = intent.getAction();
+            if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
                 checkWifiStatus();
+            } else if (action.equals(MOBILE_DATA_CHANGED_ACTION)) {
+                checkGPRSStatus();
             }
+
+            startForeground(NOTIFICATION_ID, mNotification);
         }
+    }
+
+    class MobileDataObserver extends ContentObserver {
+        Context mContext;
+
+        public MobileDataObserver(Context context, Handler handler) {
+            super(handler);
+            mContext = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+
+            Intent intent = new Intent();
+            intent.setAction(MOBILE_DATA_CHANGED_ACTION);
+            mContext.sendBroadcast(intent);
+        }
+
     }
 }
