@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tool_layout1" type="id">false</item>
+    <item name="imagewifi" type="id">false</item>
+    <item name="textwifi" type="id">false</item>
+    <item name="tool_layout2" type="id">false</item>
+    <item name="imagegprs" type="id">false</item>
+    <item name="textgprs" type="id">false</item>
+    <item name="tool_layout3" type="id">false</item>
+    <item name="imageringer" type="id">false</item>
+    <item name="textringer" type="id">false</item>
+    <item name="tool_layout4" type="id">false</item>
+    <item name="imageglim" type="id">false</item>
+    <item name="textglim" type="id">false</item>
+    <item name="tool_layout5" type="id">false</item>
+    <item name="imageset" type="id">false</item>
+    <item name="tool_text" type="id">false</item>
+    <item name="tool_layout6" type="id">false</item>
+    <item name="imagequick" type="id">false</item>
+    <item name="textquick" type="id">false</item>
+</resources>

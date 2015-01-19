@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="tool_wifi">Wi-Fi</string>
+    <string name="tool_gprs">移动数据</string>
+    <string name="tool_ringer">铃声</string>
+    <string name="tool_glim">手电筒</string>
+    <string name="tool_set">设置</string>
+    <string name="tool_quick">加速</string>
+
+</resources>

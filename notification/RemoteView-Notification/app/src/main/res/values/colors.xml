@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tool_text">#ffcdcdcd</color>
+    <color name="tool_on_text">#ff0c96f7</color>
+</resources>
