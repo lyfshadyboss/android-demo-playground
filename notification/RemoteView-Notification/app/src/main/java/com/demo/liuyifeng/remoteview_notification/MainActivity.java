@@ -16,6 +16,7 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intent = new Intent(this, NotificationService.class);
         startService(intent);
+
         finish();
     }
 

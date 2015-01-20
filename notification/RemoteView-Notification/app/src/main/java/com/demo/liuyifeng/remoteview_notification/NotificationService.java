@@ -24,7 +24,8 @@ public class NotificationService extends Service {
     public static final String TAG = "notification service";
     public static final int NOTIFICATION_ID = 1001;
 
-    private static final String MOBILE_DATA_CHANGED_ACTION = "android.demo.intent.mobile_data_changed";
+    public static final String INTENT_FILTER_ACTION = "com.liuyifeng.demo.intent.NOTIFICATION";
+    public static final String ACTION_MOBILE_DATA_CHANGED = "com.liuyifeng.demo.intent.MOBILE_DATA_CHANGED";
 
     private WifiManager mWifiManager;
     private ConnectivityManager mConnectivityManager;
@@ -33,6 +34,7 @@ public class NotificationService extends Service {
     private RemoteViews mContentView;
 
     private ChangedReceiver mChangeReceiver;
+    private SwitcherCenter mSwitcherCenter;
 
     @Override
     public void onCreate() {
@@ -41,14 +43,23 @@ public class NotificationService extends Service {
         Log.d(TAG, "notification service onCreate");
 
         mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        mChangeReceiver = new ChangedReceiver();
+        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        mChangeReceiver = new ChangedReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        intentFilter.addAction(NotificationService.MOBILE_DATA_CHANGED_ACTION);
+        intentFilter.addAction(NotificationService.ACTION_MOBILE_DATA_CHANGED);
         registerReceiver(mChangeReceiver, intentFilter);
 
-        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        mSwitcherCenter = new SwitcherCenter();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(SwitcherCenter.ACTION_WIFI);
+        intentFilter.addAction(SwitcherCenter.ACTION_GPRS);
+        intentFilter.addAction(SwitcherCenter.ACTION_RINGER);
+        intentFilter.addAction(SwitcherCenter.ACTION_GLIM);
+        intentFilter.addAction(SwitcherCenter.ACTION_APP);
+        intentFilter.addAction(SwitcherCenter.ACTION_QUICK);
+        registerReceiver(mSwitcherCenter, intentFilter);
 
         MobileDataObserver dataObserver = new MobileDataObserver(this, new Handler());
         getContentResolver().registerContentObserver(Settings.Secure.getUriFor("mobile_data"), false, dataObserver);
@@ -59,6 +70,23 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "notification onStartCommand");
+
+        int switcherId = intent.getIntExtra(SwitcherCenter.SWITCHER_KEY, -1);
+        if (switcherId >= 0) {
+            switch (switcherId) {
+                case SwitcherCenter.SWITCHER_ID_WIFI:
+                    mWifiManager.setWifiEnabled(!mWifiManager.isWifiEnabled());
+                    break;
+                case SwitcherCenter.SWITCHER_ID_GPRS:
+                    boolean enabled = Util.getMobileDataEnabled(mConnectivityManager);
+                    Util.setMobileDataEnabled(mConnectivityManager, !enabled);
+                    break;
+                case SwitcherCenter.SWITCHER_ID_RINGER:
+                    break;
+                case SwitcherCenter.SWITCHER_ID_GLIM:
+                    break;
+            }
+        }
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -125,29 +153,23 @@ public class NotificationService extends Service {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_launcher);
         mContentView = new RemoteViews(getPackageName(), R.layout.notify_page);
 
-        Intent wifiIntent = new Intent();
-        wifiIntent.setAction("android.intent.WIFION");
+        Intent wifiIntent = new Intent(SwitcherCenter.ACTION_WIFI);
         PendingIntent wifiPendingIntent = PendingIntent.getBroadcast(this, 0, wifiIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent gprsIntent = new Intent();
-        gprsIntent.setAction("android.intent.GPRSON");
+        Intent gprsIntent = new Intent(SwitcherCenter.ACTION_GPRS);
         PendingIntent gprsPendingIntent = PendingIntent.getBroadcast(this, 0, gprsIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent ringerIntent = new Intent();
-        ringerIntent.setAction("android.intent.RINGERON");
+        Intent ringerIntent = new Intent(SwitcherCenter.ACTION_RINGER);
         PendingIntent ringerPendingIntent = PendingIntent.getBroadcast(this, 0, ringerIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent glimIntent = new Intent();
-        glimIntent.setAction("android.intent.GLIMON");
+        Intent glimIntent = new Intent(SwitcherCenter.ACTION_GLIM);
         PendingIntent glimPendingIntent = PendingIntent.getBroadcast(this, 0, glimIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent setttingIntent = new Intent();
-        setttingIntent.setAction("android.intent.APPON");
+        Intent setttingIntent = new Intent(SwitcherCenter.ACTION_APP);
         setttingIntent.putExtra("appcomponent", "com.android.settings");
         PendingIntent settingPendingIntent = PendingIntent.getBroadcast(this, 0, setttingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent quickIntent = new Intent();
-        quickIntent.setAction("android.intent.QUICKON");
+        Intent quickIntent = new Intent(SwitcherCenter.ACTION_QUICK);
         PendingIntent quickPendingIntent = PendingIntent.getBroadcast(this, 0, quickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mContentView.setOnClickPendingIntent(R.id.tool_layout1, wifiPendingIntent);
@@ -169,7 +191,7 @@ public class NotificationService extends Service {
             String action = intent.getAction();
             if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
                 checkWifiStatus();
-            } else if (action.equals(MOBILE_DATA_CHANGED_ACTION)) {
+            } else if (action.equals(ACTION_MOBILE_DATA_CHANGED)) {
                 checkGPRSStatus();
             }
 
@@ -190,9 +212,8 @@ public class NotificationService extends Service {
             super.onChange(selfChange);
 
             Intent intent = new Intent();
-            intent.setAction(MOBILE_DATA_CHANGED_ACTION);
+            intent.setAction(ACTION_MOBILE_DATA_CHANGED);
             mContext.sendBroadcast(intent);
         }
-
     }
 }

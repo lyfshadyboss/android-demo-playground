@@ -21,4 +21,14 @@ public class Util {
         return result;
     }
 
+    public static void setMobileDataEnabled(ConnectivityManager connectivityManager, boolean enabled) {
+        Class aClass = connectivityManager.getClass();
+        Class[] types = new Class[]{Boolean.TYPE};
+
+        try {
+            aClass.getMethod("setMobileDataEnabled", types).invoke(connectivityManager, enabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
