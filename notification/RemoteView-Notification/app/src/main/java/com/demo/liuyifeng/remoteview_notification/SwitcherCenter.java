@@ -67,10 +67,13 @@ public class SwitcherCenter extends BroadcastReceiver {
                 e.printStackTrace();
             }
 
+            Util.collapseStatusBar(context);
             return;
         }
 
         if (action.equals(ACTION_QUICK)) {
+            Util.collapseStatusBar(context);
+            // TDOO
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.demo.liuyifeng.remoteview_notification;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
+import android.os.Build;
 
 /**
  * Created by liuyifeng on 15-1-19.
@@ -30,5 +32,41 @@ public class Util {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void expandStatusBar(Context context) {
+        try {
+            String methodName = "expand";
+
+            if (Build.VERSION.SDK_INT >= 17) {
+                methodName = "expandPanels";
+            }
+
+            Object statusbar = context.getSystemService("statusbar");
+            if (statusbar != null) {
+                statusbar.getClass().getMethod(methodName).invoke(statusbar);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void collapseStatusBar(Context context) {
+        try {
+            String methodName = "collapse";
+
+            if (Build.VERSION.SDK_INT >= 17) {
+                methodName = "collapsePanels";
+            }
+
+            Object statusbar = context.getSystemService("statusbar");
+            if (statusbar != null) {
+                statusbar.getClass().getMethod(methodName).invoke(statusbar);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
