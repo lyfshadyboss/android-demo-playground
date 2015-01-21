@@ -8,13 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 /**
@@ -36,11 +36,15 @@ public class NotificationService extends Service {
     private ChangedReceiver mChangeReceiver;
     private SwitcherCenter mSwitcherCenter;
 
+    private RingerHandler mRingerHandler;
+    private FlashHandler mFlashHandler;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Log.d(TAG, "notification service onCreate");
+        mRingerHandler = new RingerHandler(this);
+        mFlashHandler = new FlashHandler(this);
 
         mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -49,6 +53,8 @@ public class NotificationService extends Service {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         intentFilter.addAction(NotificationService.ACTION_MOBILE_DATA_CHANGED);
+        intentFilter.addAction(FlashHandler.ACTION_FLASH_CHANGED);
+        intentFilter.addAction(RingerHandler.ACTION_RINGER_MODE_CHANGED);
         registerReceiver(mChangeReceiver, intentFilter);
 
         mSwitcherCenter = new SwitcherCenter();
@@ -69,8 +75,6 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "notification onStartCommand");
-
         int switcherId = intent.getIntExtra(SwitcherCenter.SWITCHER_KEY, -1);
         if (switcherId >= 0) {
             switch (switcherId) {
@@ -82,8 +86,10 @@ public class NotificationService extends Service {
                     Util.setMobileDataEnabled(mConnectivityManager, !enabled);
                     break;
                 case SwitcherCenter.SWITCHER_ID_RINGER:
+                    mRingerHandler.switchState();
                     break;
                 case SwitcherCenter.SWITCHER_ID_GLIM:
+                    mFlashHandler.switchState();
                     break;
             }
         }
@@ -94,8 +100,6 @@ public class NotificationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        Log.d(TAG, "notification onDestroy");
     }
 
     @Override
@@ -113,13 +117,9 @@ public class NotificationService extends Service {
     private void checkWifiStatus() {
         int state = mWifiManager.getWifiState();
         if (state == WifiManager.WIFI_STATE_ENABLED) {
-            Log.d(TAG, "wifi enabled");
-
             mContentView.setTextColor(R.id.textwifi, getResources().getColor(R.color.tool_on_text));
             mContentView.setImageViewResource(R.id.imagewifi, R.drawable.wifi_on);
         } else if (state == WifiManager.WIFI_STATE_DISABLED) {
-            Log.d(TAG, "wifi disabled");
-
             mContentView.setTextColor(R.id.textwifi, getResources().getColor(R.color.tool_text));
             mContentView.setImageViewResource(R.id.imagewifi, R.drawable.wifi);
         }
@@ -129,24 +129,36 @@ public class NotificationService extends Service {
         Boolean enabled = Util.getMobileDataEnabled(mConnectivityManager);
 
         if (enabled) {
-            Log.d(TAG, "gprs enabled");
-
             mContentView.setTextColor(R.id.textgprs, getResources().getColor(R.color.tool_on_text));
             mContentView.setImageViewResource(R.id.imagegprs, R.drawable.gprs_on);
         } else {
-            Log.d(TAG, "gprs disabled");
-
             mContentView.setTextColor(R.id.textgprs, getResources().getColor(R.color.tool_text));
             mContentView.setImageViewResource(R.id.imagegprs, R.drawable.gprs);
         }
     }
 
     private void checkRingerStatus() {
+        int status = mRingerHandler.getStatus();
 
+        if (status == AudioManager.RINGER_MODE_NORMAL) {
+            mContentView.setImageViewResource(R.id.imageringer, R.drawable.iw_white_ringer_on);
+        } else if (status == AudioManager.RINGER_MODE_SILENT) {
+            mContentView.setImageViewResource(R.id.imageringer, R.drawable.iw_white_ringer_off);
+        } else if (status == AudioManager.RINGER_MODE_VIBRATE) {
+            mContentView.setImageViewResource(R.id.imageringer, R.drawable.iw_white_ringer_vibrate);
+        }
     }
 
     private void checkGlimStatus() {
+        int status = mFlashHandler.getStatus();
 
+        if (status == FlashHandler.STATUS_ON) {
+            mContentView.setTextColor(R.id.textglim, getResources().getColor(R.color.tool_on_text));
+            mContentView.setImageViewResource(R.id.imageglim, R.drawable.glim_on);
+        } else {
+            mContentView.setTextColor(R.id.textglim, getResources().getColor(R.color.tool_text));
+            mContentView.setImageViewResource(R.id.imageglim, R.drawable.glim);
+        }
     }
 
     private void startNotification() {
@@ -193,6 +205,10 @@ public class NotificationService extends Service {
                 checkWifiStatus();
             } else if (action.equals(ACTION_MOBILE_DATA_CHANGED)) {
                 checkGPRSStatus();
+            } else if (action.equals(FlashHandler.ACTION_FLASH_CHANGED)) {
+                checkGlimStatus();
+            } else if (action.equals(RingerHandler.ACTION_RINGER_MODE_CHANGED)) {
+                checkRingerStatus();
             }
 
             startForeground(NOTIFICATION_ID, mNotification);

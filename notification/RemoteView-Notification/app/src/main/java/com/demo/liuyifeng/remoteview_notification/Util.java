@@ -14,7 +14,7 @@ public class Util {
         Class aClass = connectivityManager.getClass();
 
         try {
-            result = (Boolean) aClass.getMethod("getMobileDataEnabled", null).invoke(connectivityManager, null);
+            result = (Boolean) aClass.getMethod("getMobileDataEnabled").invoke(connectivityManager);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -34,6 +34,7 @@ public class Util {
         }
     }
 
+    @SuppressWarnings("ResourceType")
     public static void expandStatusBar(Context context) {
         try {
             String methodName = "expand";
@@ -52,6 +53,7 @@ public class Util {
 
     }
 
+    @SuppressWarnings("ResourceType")
     public static void collapseStatusBar(Context context) {
         try {
             String methodName = "collapse";

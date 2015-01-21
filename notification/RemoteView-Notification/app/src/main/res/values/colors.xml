@@ -2,4 +2,9 @@
 <resources>
     <color name="tool_text">#ffcdcdcd</color>
     <color name="tool_on_text">#ff0c96f7</color>
+
+    <!-- Quick dialog -->
+    <color name="quick_mem">#ff17c75d</color>
+    <color name="quick_shorttext">#ffffffff</color>
+    <color name="quick_longtext">#ffffffff</color>
 </resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:animateLayoutChanges="true"
+    android:layout_gravity="center"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:background="@drawable/quickdialog_corner"
+        android:gravity="center_horizontal"
+        android:id="@id/quick_layout"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/quick_layout_top"
+        android:layout_width="@dimen/quick_layout_width">
+
+        <TextView
+            android:drawableLeft="@drawable/quickclearicon"
+            android:drawablePadding="@dimen/quick_icon_left"
+            android:id="@id/quickmem"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/quick_text_right"
+            android:layout_marginTop="@dimen/quick_layout_top"
+            android:layout_width="wrap_content"
+            android:text="@string/quick_total_release"
+            android:textColor="@color/quick_mem"
+            android:textSize="@dimen/quick_realease_text"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:id="@id/quickshorttext"
+            android:layout_alignBottom="@id/quickmem"
+            android:layout_alignTop="@id/quickmem"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/quick_realease_right"
+            android:layout_toRightOf="@id/quickmem"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/quick_shorttext"
+            android:textSize="@dimen/quick_realease_meamory"/>
+
+        <TextView
+            android:id="@id/quicklongtext"
+            android:layout_below="@id/quickmem"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/quick_text_marginleft"
+            android:layout_marginTop="@dimen/quick_text_bottom"
+            android:layout_width="wrap_content"
+            android:lineSpacingExtra="@dimen/quick_long_text_extra"
+            android:paddingBottom="@dimen/quick_layout_top"
+            android:paddingRight="@dimen/quick_text_marginright"
+            android:textColor="@color/quick_longtext"
+            android:textSize="@dimen/quick_long_text"/>
+    </RelativeLayout>
+</FrameLayout>

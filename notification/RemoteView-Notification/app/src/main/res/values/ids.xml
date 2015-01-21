@@ -18,4 +18,10 @@
     <item name="tool_layout6" type="id">false</item>
     <item name="imagequick" type="id">false</item>
     <item name="textquick" type="id">false</item>
+    <item name="quick_layout" type="id">false</item>
+    <item name="quickmem" type="id">false</item>
+    <item name="quickshorttext" type="id">false</item>
+    <item name="quicklongtext" type="id">false</item>
+    <item name="quicklongtext_zero" type="id">false</item>
+    <item name="quick_layout_zero" type="id">false</item>
 </resources>

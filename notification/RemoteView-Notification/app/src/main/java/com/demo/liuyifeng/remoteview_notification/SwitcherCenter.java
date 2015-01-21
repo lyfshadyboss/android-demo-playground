@@ -44,14 +44,14 @@ public class SwitcherCenter extends BroadcastReceiver {
         }
 
         if (action.equals(ACTION_RINGER)) {
-            notiIntent.putExtra(SWITCHER_KEY, ACTION_RINGER);
+            notiIntent.putExtra(SWITCHER_KEY, SWITCHER_ID_RINGER);
             context.startService(notiIntent);
 
             return;
         }
 
         if (action.equals(ACTION_GLIM)) {
-            notiIntent.putExtra(SWITCHER_KEY, ACTION_GLIM);
+            notiIntent.putExtra(SWITCHER_KEY, SWITCHER_ID_GLIM);
             context.startService(notiIntent);
 
             return;
