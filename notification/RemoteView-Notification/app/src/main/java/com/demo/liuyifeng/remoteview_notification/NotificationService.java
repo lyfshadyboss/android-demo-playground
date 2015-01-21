@@ -58,7 +58,7 @@ public class NotificationService extends Service {
         intentFilter.addAction(RingerHandler.ACTION_RINGER_MODE_CHANGED);
         registerReceiver(mChangeReceiver, intentFilter);
 
-        mSwitcherCenter = new SwitcherCenter();
+        mSwitcherCenter = new SwitcherCenter(this);
         intentFilter = new IntentFilter();
         intentFilter.addAction(SwitcherCenter.ACTION_WIFI);
         intentFilter.addAction(SwitcherCenter.ACTION_GPRS);
@@ -76,7 +76,7 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        int switcherId = intent.getIntExtra(SwitcherCenter.SWITCHER_KEY, -1);
+        int switcherId = intent != null ? intent.getIntExtra(SwitcherCenter.SWITCHER_KEY, -1) : -1;
         if (switcherId >= 0) {
             switch (switcherId) {
                 case SwitcherCenter.SWITCHER_ID_WIFI:

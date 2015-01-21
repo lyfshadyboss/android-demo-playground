@@ -24,6 +24,12 @@ public class SwitcherCenter extends BroadcastReceiver {
     public static final String ACTION_APP = "com.liuyifeng.demo.intent.APP";
     public static final String ACTION_QUICK = "com.liuyifeng.demo.intent.QUICK";
 
+    private MemoryCleaner mMemoryCleaner;
+
+    public SwitcherCenter(Context context) {
+        mMemoryCleaner = new MemoryCleaner(context);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent notiIntent = new Intent(NotificationService.INTENT_FILTER_ACTION);
@@ -73,7 +79,7 @@ public class SwitcherCenter extends BroadcastReceiver {
 
         if (action.equals(ACTION_QUICK)) {
             Util.collapseStatusBar(context);
-            // TDOO
+            mMemoryCleaner.clearMemory();
         }
     }
 }
