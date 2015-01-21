@@ -47,7 +47,7 @@ public class FlashHandler {
     private void openFlash() {
         if (mCamera == null && mStatus != STATUS_ON) {
             try {
-                mCamera = Camera.open();
+                mCamera = Camera.open(0);
                 Camera.Parameters parameters = mCamera.getParameters();
                 parameters.setFlashMode("torch");
                 mCamera.setParameters(parameters);

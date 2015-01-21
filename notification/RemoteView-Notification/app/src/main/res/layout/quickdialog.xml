@@ -9,6 +9,7 @@
     <RelativeLayout
         android:background="@drawable/quickdialog_corner"
         android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
         android:id="@id/quick_layout"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/quick_layout_top"
@@ -38,19 +39,21 @@
             android:layout_width="wrap_content"
             android:singleLine="true"
             android:textColor="@color/quick_shorttext"
-            android:textSize="@dimen/quick_realease_meamory"/>
+            android:textSize="@dimen/quick_realease_meamory"
+            android:text="@string/quick_shorttext"/>
 
         <TextView
             android:id="@id/quicklongtext"
             android:layout_below="@id/quickmem"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/quick_text_marginleft"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/quick_text_bottom"
             android:layout_width="wrap_content"
             android:lineSpacingExtra="@dimen/quick_long_text_extra"
             android:paddingBottom="@dimen/quick_layout_top"
             android:paddingRight="@dimen/quick_text_marginright"
             android:textColor="@color/quick_longtext"
-            android:textSize="@dimen/quick_long_text"/>
+            android:textSize="@dimen/quick_long_text"
+            android:text="@string/quick_longtext"/>
     </RelativeLayout>
 </FrameLayout>

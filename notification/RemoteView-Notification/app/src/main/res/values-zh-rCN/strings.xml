@@ -8,4 +8,7 @@
     <string name="tool_set">设置</string>
     <string name="tool_quick">加速</string>
 
+    <!-- Quick dialog -->
+    <string name="quick_shorttext">内存被清理了！</string>
+    <string name="quick_longtext">X 加速！您的手机已处于极速状态，想更快吗？多点几次试试吧！</string>
 </resources>

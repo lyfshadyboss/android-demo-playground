@@ -16,6 +16,6 @@
     <!-- Quick dialog -->
     <string name="quick_total_release">100M</string>
     <string name="quick_shorttext">has been released!</string>
-    <string name="quick_longtext">ZERO Boost! Your phone runs fast. Want even faster? Click few more times!</string>
+    <string name="quick_longtext">X Boost! Your phone runs fast. Want even faster? Click few more times!</string>
 
 </resources>

@@ -142,11 +142,11 @@ public class NotificationService extends Service {
         int status = mRingerHandler.getStatus();
 
         if (status == AudioManager.RINGER_MODE_NORMAL) {
-            mContentView.setImageViewResource(R.id.imageringer, R.drawable.iw_white_ringer_on);
+            mContentView.setImageViewResource(R.id.imageringer, R.drawable.ringer_on);
         } else if (status == AudioManager.RINGER_MODE_SILENT) {
-            mContentView.setImageViewResource(R.id.imageringer, R.drawable.iw_white_ringer_off);
+            mContentView.setImageViewResource(R.id.imageringer, R.drawable.ringer_off);
         } else if (status == AudioManager.RINGER_MODE_VIBRATE) {
-            mContentView.setImageViewResource(R.id.imageringer, R.drawable.iw_white_ringer_vibrate);
+            mContentView.setImageViewResource(R.id.imageringer, R.drawable.ringer_vibrate);
         }
     }
 
