@@ -11,6 +11,7 @@ import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -195,6 +196,12 @@ public class NotificationService extends Service {
 
         mBuilder.setContent(mContentView);
         mNotification = mBuilder.build();
+
+        mNotification.when = System.currentTimeMillis() + Integer.MAX_VALUE;
+        if (Build.VERSION.SDK_INT >= 16) {
+            mNotification.priority = Notification.PRIORITY_MAX;
+        }
+
         startForeground(NOTIFICATION_ID, mNotification);
     }
 
