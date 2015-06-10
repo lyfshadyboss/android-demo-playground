@@ -31,12 +31,6 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         container = (LinearLayout) findViewById(R.id.container);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        views = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            View view = inflater.inflate(R.layout.item, null);
-            views.add(view);
-        }
-
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(20);
 
@@ -48,8 +42,15 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
             }
         });
 
-        viewPager.setAdapter(new MyAdapter());
+        MyAdapter adapter = new MyAdapter();
+        viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(this);
+
+        for (int i = 1; i <= 12; i++) {
+            View view = inflater.inflate(R.layout.item, null);
+            views.add(view);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     class MyAdapter extends PagerAdapter {

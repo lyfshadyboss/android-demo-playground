@@ -14,6 +14,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
             android:text="上海浦东T2"
             android:gravity="center" />
 

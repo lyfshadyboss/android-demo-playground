@@ -11,12 +11,20 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
+        <com.example.yifengliu.viewpagerexample.WrapContentViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:clipChildren="false"></android.support.v4.view.ViewPager>
+            android:clipChildren="false">
+
+        </com.example.yifengliu.viewpagerexample.WrapContentViewPager>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:gravity="center" />
 
 </LinearLayout>
