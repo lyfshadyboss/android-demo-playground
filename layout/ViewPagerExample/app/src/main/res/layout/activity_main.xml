@@ -4,6 +4,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layerType="software"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
