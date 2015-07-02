@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.example.yifengliu.material_animations"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.example.yifengliu.material_animations.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.yifengliu.material_animations.DetailActivity1"/>
+        <activity android:name="com.example.yifengliu.material_animations.DetailActivity2"/>
+        <activity android:name="com.example.yifengliu.material_animations.DetailActivity3"/>
+    </application>
+
+</manifest>
