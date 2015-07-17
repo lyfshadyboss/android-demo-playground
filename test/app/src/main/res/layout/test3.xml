@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="20dp">
+
+    <LinearLayout
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 航站信息 -->
+        <RelativeLayout
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/flight_type_str"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                style="@style/text_14_333333"
+                android:layout_centerVertical="true"
+                android:text="出发"/>
+
+            <TextView
+                android:id="@+id/flight_airport_terminal_name"
+                android:layout_toRightOf="@id/flight_type_str"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@style/text_17_333333"
+                android:text="浦东T2航站楼"/>
+
+            <TextView
+                android:id="@+id/flight_time"
+                android:layout_below="@id/flight_airport_terminal_name"
+                android:layout_toRightOf="@id/flight_type_str"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@style/text_14_999999"
+                android:text="MU5323 预计士大 sssssdf sdkfjs sdkdfjsf 士大夫当"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

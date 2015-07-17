@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.example.yifengliu.test.Test5
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.yifengliu.test.RoundCornerLinearLayout
+            android:id="@+id/test5_group1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:background="#ff0000"
+            android:gravity="center"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="T1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="T2"/>
+        </com.example.yifengliu.test.RoundCornerLinearLayout>
+
+        <com.example.yifengliu.test.RoundCornerLinearLayout
+            android:id="@+id/test5_group2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:background="#00ff00"
+            android:gravity="center"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="T3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="T4"/>
+        </com.example.yifengliu.test.RoundCornerLinearLayout>
+
+    </com.example.yifengliu.test.Test5>
+
+</LinearLayout>

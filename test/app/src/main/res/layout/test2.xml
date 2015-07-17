@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.yifengliu.test.Test2 xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/test2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="HHHHH" />-->
+    <!--</LinearLayout>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:gravity="center"-->
+    <!--android:text="$888" />-->
+    <!--</LinearLayout>-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:enabled="false"
+                android:id="@+id/mytext"
+                android:layout_width="match_parent"
+                android:textColor="#099fde"
+                android:layout_height="50dp"
+                android:text="HEAD"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/mybutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CLICK ME" />
+
+            <com.example.yifengliu.test.SpecialLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="乌鲁木但是疯狂世界疯狂世界疯狂世界疯狂世界疯狂世界疯狂世界疯狂世界"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="但是疯狂世界但是疯"
+                    android:layout_gravity="center" />
+            </com.example.yifengliu.test.SpecialLinearLayout>
+
+            <ListView
+                android:id="@+id/mylistview"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"></ListView>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</com.example.yifengliu.test.Test2>
