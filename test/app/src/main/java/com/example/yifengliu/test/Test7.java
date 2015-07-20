@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -25,7 +24,6 @@ public class Test7 extends FrameLayout {
     private List<View> transitionViewList = new ArrayList<View>();
 
     private static final String[] strs = new String[]{
-            "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth",
             "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"
     };
 
@@ -59,10 +57,6 @@ public class Test7 extends FrameLayout {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlphaAnimation anim = new AlphaAnimation(1, 1);
-                anim.setFillAfter(true);
-                view.startAnimation(anim);
-
                 exitTransition(parent, position, 500);
 
                 postDelayed(new Runnable() {
@@ -120,11 +114,11 @@ public class Test7 extends FrameLayout {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = inflate(getContext(), android.R.layout.simple_list_item_1, null);
+                convertView = inflate(getContext(), R.layout.my_list_view_item, null);
             }
 
-            TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
-            text1.setText(elements.get(position));
+            TextView text = (TextView) convertView.findViewById(R.id.text);
+            text.setText(elements.get(position));
 
             return convertView;
         }
@@ -132,15 +126,16 @@ public class Test7 extends FrameLayout {
 
 
     protected void onResume() {
-        List<String> strList2 = new ArrayList<>();
+        List<String> newStrList = new ArrayList<>();
         for (int i = 0; i < strs.length; ++i) {
-            strList2.add(strs[i]);
+            newStrList.add(strs[i]);
         }
-        adapter = new MyAdater();
-        adapter.setElements(strList2);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
+        adapter = new MyAdater();
+        adapter.setElements(newStrList);
+        listView.setAdapter(adapter);
+
+        //listView.clearDisappearingChildren();
         for (View view : transitionViewList) {
             view.clearAnimation();
         }

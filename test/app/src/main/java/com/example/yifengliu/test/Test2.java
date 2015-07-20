@@ -2,14 +2,11 @@ package com.example.yifengliu.test;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by yifengliu on 15-5-4.
