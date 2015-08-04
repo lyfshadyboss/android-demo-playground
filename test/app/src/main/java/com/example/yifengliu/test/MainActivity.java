@@ -9,16 +9,20 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
-    //Test6 test6;
+    Test6 test6;
     Test7 test7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test7);
+        setContentView(R.layout.test8);
 
-        //test6 = (Test6) findViewById(R.id.test6_group);
-        test7 = (Test7) findViewById(R.id.test7_group);
+        try {
+            test6 = (Test6) findViewById(R.id.test6_group);
+            test7 = (Test7) findViewById(R.id.test7_group);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Log.d("life cycle", "activity1 created");
     }
@@ -55,8 +59,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //test6.onResume();
-        test7.onResume();
+        if (test6 != null) test6.onResume();
+        if (test7 != null) test7.onResume();
 
         Log.d("life cycle", "activity1 resumed");
     }
@@ -64,8 +68,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //test6.onPause();
-        test7.onPause();
+        if (test6 != null) test6.onPause();
+        if (test7 != null) test7.onPause();
 
         Log.d("life cycle", "activity1 paused");
     }
@@ -73,8 +77,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        //test6.onStop();
-        test7.onStop();
+        if (test6 != null) test6.onStop();
+        if (test7 != null) test7.onStop();
 
         Log.d("life cycle", "activity1 stoped");
     }
