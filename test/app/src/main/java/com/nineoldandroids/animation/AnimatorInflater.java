@@ -16,14 +16,14 @@
 package com.nineoldandroids.animation;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
-import android.content.res.Resources.NotFoundException;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.util.Xml;
 import android.view.animation.AnimationUtils;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 /**
  * This class is used to instantiate animator XML files into Animator objects.
- * <p>
+ * <p/>
  * For performance reasons, inflation relies heavily on pre-processing of
  * XML files that is done at build time. Therefore, it is not currently possible
  * to use this inflater with an XmlPullParser over a plain XML file at runtime;
@@ -40,17 +40,17 @@ import java.util.ArrayList;
  * <em>something</em> file.)
  */
 public class AnimatorInflater {
-    private static final int[] AnimatorSet = new int[] {
+    private static final int[] AnimatorSet = new int[]{
         /* 0 */ android.R.attr.ordering,
     };
     private static final int AnimatorSet_ordering = 0;
 
-    private static final int[] PropertyAnimator = new int[] {
+    private static final int[] PropertyAnimator = new int[]{
         /* 0 */ android.R.attr.propertyName,
     };
     private static final int PropertyAnimator_propertyName = 0;
 
-    private static final int[] Animator = new int[] {
+    private static final int[] Animator = new int[]{
         /* 0 */ android.R.attr.interpolator,
         /* 1 */ android.R.attr.duration,
         /* 2 */ android.R.attr.startOffset,
@@ -78,7 +78,7 @@ public class AnimatorInflater {
     /**
      * Enum values used in XML attributes to indicate the value for mValueType
      */
-    private static final int VALUE_TYPE_FLOAT       = 0;
+    private static final int VALUE_TYPE_FLOAT = 0;
     //private static final int VALUE_TYPE_INT         = 1;
     //private static final int VALUE_TYPE_COLOR       = 4;
     //private static final int VALUE_TYPE_CUSTOM      = 5;
@@ -87,7 +87,7 @@ public class AnimatorInflater {
      * Loads an {@link com.nineoldandroids.animation.Animator} object from a resource
      *
      * @param context Application context used to access resources
-     * @param id The resource id of the animation to load
+     * @param id      The resource id of the animation to load
      * @return The animator object reference by the specified id
      * @throws android.content.res.Resources.NotFoundException when the animation cannot be loaded
      */
@@ -101,13 +101,13 @@ public class AnimatorInflater {
         } catch (XmlPullParserException ex) {
             NotFoundException rnf =
                     new NotFoundException("Can't load animation resource ID #0x" +
-                    Integer.toHexString(id));
+                            Integer.toHexString(id));
             rnf.initCause(ex);
             throw rnf;
         } catch (IOException ex) {
             NotFoundException rnf =
                     new NotFoundException("Can't load animation resource ID #0x" +
-                    Integer.toHexString(id));
+                            Integer.toHexString(id));
             rnf.initCause(ex);
             throw rnf;
         } finally {
@@ -122,7 +122,7 @@ public class AnimatorInflater {
     }
 
     private static Animator createAnimatorFromXml(Context c, XmlPullParser parser,
-            AttributeSet attrs, AnimatorSet parent, int sequenceOrdering)
+                                                  AttributeSet attrs, AnimatorSet parent, int sequenceOrdering)
             throws XmlPullParserException, IOException {
 
         Animator anim = null;
@@ -132,14 +132,14 @@ public class AnimatorInflater {
         int type;
         int depth = parser.getDepth();
 
-        while (((type=parser.next()) != XmlPullParser.END_TAG || parser.getDepth() > depth)
-               && type != XmlPullParser.END_DOCUMENT) {
+        while (((type = parser.next()) != XmlPullParser.END_TAG || parser.getDepth() > depth)
+                && type != XmlPullParser.END_DOCUMENT) {
 
             if (type != XmlPullParser.START_TAG) {
                 continue;
             }
 
-            String  name = parser.getName();
+            String name = parser.getName();
 
             if (name.equals("objectAnimator")) {
                 anim = loadObjectAnimator(c, attrs);
@@ -154,7 +154,7 @@ public class AnimatorInflater {
                 a.getValue(/*com.android.internal.R.styleable.*/AnimatorSet_ordering, orderingValue);
                 int ordering = orderingValue.type == TypedValue.TYPE_INT_DEC ? orderingValue.data : TOGETHER;
 
-                createAnimatorFromXml(c, parser, attrs, (AnimatorSet) anim,  ordering);
+                createAnimatorFromXml(c, parser, attrs, (AnimatorSet) anim, ordering);
                 a.recycle();
             } else {
                 throw new RuntimeException("Unknown animator name: " + parser.getName());
@@ -208,7 +208,7 @@ public class AnimatorInflater {
      * attributes set.
      *
      * @param context the application environment
-     * @param attrs the set of attributes holding the animation parameters
+     * @param attrs   the set of attributes holding the animation parameters
      */
     private static ValueAnimator loadAnimator(Context context, AttributeSet attrs, ValueAnimator anim)
             throws NotFoundException {
@@ -242,8 +242,8 @@ public class AnimatorInflater {
 
         if ((hasFrom && (fromType >= TypedValue.TYPE_FIRST_COLOR_INT) &&
                 (fromType <= TypedValue.TYPE_LAST_COLOR_INT)) ||
-            (hasTo && (toType >= TypedValue.TYPE_FIRST_COLOR_INT) &&
-                (toType <= TypedValue.TYPE_LAST_COLOR_INT))) {
+                (hasTo && (toType >= TypedValue.TYPE_FIRST_COLOR_INT) &&
+                        (toType <= TypedValue.TYPE_LAST_COLOR_INT))) {
             // special case for colors: ignore valueType and get ints
             getFloats = false;
             anim.setEvaluator(new ArgbEvaluator());
@@ -306,7 +306,7 @@ public class AnimatorInflater {
                     if (toType == TypedValue.TYPE_DIMENSION) {
                         valueTo = (int) a.getDimension(valueToIndex, 0f);
                     } else if ((toType >= TypedValue.TYPE_FIRST_COLOR_INT) &&
-                        (toType <= TypedValue.TYPE_LAST_COLOR_INT)) {
+                            (toType <= TypedValue.TYPE_LAST_COLOR_INT)) {
                         valueTo = a.getColor(valueToIndex, 0);
                     } else {
                         valueTo = a.getInt(valueToIndex, 0);
