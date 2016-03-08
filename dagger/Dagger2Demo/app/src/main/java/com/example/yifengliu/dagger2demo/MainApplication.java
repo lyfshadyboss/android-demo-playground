@@ -2,21 +2,23 @@ package com.example.yifengliu.dagger2demo;
 
 import android.app.Application;
 
+import com.example.yifengliu.dagger2demo.component.MainComponent;
+
 /**
  * 应用信息
  * <p>
  * Created by yifengliu on 16/3/8.
  */
-public class DemoApplication extends Application {
-    private static DemoGraph sDemoGraph;
-    private static DemoApplication sInstance;
+public class MainApplication extends Application {
+    private static MainGraph sDemoGraph;
+    private static MainApplication sInstance;
 
-    public static DemoGraph component() {
+    public static MainGraph component() {
         return sDemoGraph;
     }
 
     public static void buildComponentAndInject() {
-        sDemoGraph = DemoComponent.Initializer.init(sInstance);
+        sDemoGraph = MainComponent.Initializer.init(sInstance);
     }
 
     @Override

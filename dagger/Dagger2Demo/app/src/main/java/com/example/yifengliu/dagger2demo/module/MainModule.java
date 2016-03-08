@@ -1,9 +1,9 @@
-package com.example.yifengliu.dagger2demo.modules;
+package com.example.yifengliu.dagger2demo.module;
 
 import android.app.Application;
 import android.content.res.Resources;
 
-import com.example.yifengliu.dagger2demo.DemoApplication;
+import com.example.yifengliu.dagger2demo.MainApplication;
 
 import javax.inject.Singleton;
 
@@ -17,9 +17,9 @@ import dagger.Provides;
  */
 @Module
 public class MainModule {
-    private final DemoApplication mApp;
+    private final MainApplication mApp;
 
-    public MainModule(DemoApplication application) {
+    public MainModule(MainApplication application) {
         mApp = application;
     }
 

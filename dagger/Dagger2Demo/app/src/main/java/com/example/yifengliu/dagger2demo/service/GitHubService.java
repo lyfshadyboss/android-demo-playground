@@ -1,7 +1,7 @@
-package com.example.yifengliu.dagger2demo.contents;
+package com.example.yifengliu.dagger2demo.service;
 
 
-import com.example.yifengliu.dagger2demo.list.ListAdapter;
+import com.example.yifengliu.dagger2demo.view.adapter.ListAdapter;
 
 import java.util.ArrayList;
 

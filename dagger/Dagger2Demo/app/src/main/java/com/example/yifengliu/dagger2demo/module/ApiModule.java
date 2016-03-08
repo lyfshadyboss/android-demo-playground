@@ -1,6 +1,6 @@
-package com.example.yifengliu.dagger2demo.modules;
+package com.example.yifengliu.dagger2demo.module;
 
-import com.example.yifengliu.dagger2demo.contents.GitHubService;
+import com.example.yifengliu.dagger2demo.service.GitHubService;
 
 import javax.inject.Singleton;
 

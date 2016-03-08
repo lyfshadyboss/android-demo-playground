@@ -1,4 +1,4 @@
-package com.example.yifengliu.dagger2demo.list;
+package com.example.yifengliu.dagger2demo.view.adapter;
 
 
 import android.support.v7.widget.RecyclerView;

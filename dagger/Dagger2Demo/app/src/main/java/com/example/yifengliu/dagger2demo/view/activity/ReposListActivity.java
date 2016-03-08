@@ -1,13 +1,14 @@
-package com.example.yifengliu.dagger2demo.list;
+package com.example.yifengliu.dagger2demo.view.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.yifengliu.dagger2demo.DemoApplication;
+import com.example.yifengliu.dagger2demo.MainApplication;
 import com.example.yifengliu.dagger2demo.R;
-import com.example.yifengliu.dagger2demo.contents.GitHubService;
+import com.example.yifengliu.dagger2demo.service.GitHubService;
+import com.example.yifengliu.dagger2demo.view.adapter.ListAdapter;
 
 import javax.inject.Inject;
 
@@ -34,7 +35,7 @@ public class ReposListActivity extends Activity {
         setContentView(R.layout.activity_repos_list);
         ButterKnife.bind(this);
 
-        DemoApplication.component().inject(this);
+        MainApplication.component().inject(this);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
