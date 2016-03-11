@@ -10,15 +10,15 @@ import com.example.yifengliu.dagger2demo.component.MainComponent;
  * Created by yifengliu on 16/3/8.
  */
 public class MainApplication extends Application {
-    private static MainGraph sDemoGraph;
+    private static MainComponent sMainComponent;
     private static MainApplication sInstance;
 
-    public static MainGraph component() {
-        return sDemoGraph;
+    public static MainComponent component() {
+        return sMainComponent;
     }
 
     public static void buildComponentAndInject() {
-        sDemoGraph = MainComponent.Initializer.init(sInstance);
+        sMainComponent = MainComponent.Initializer.init(sInstance);
     }
 
     @Override

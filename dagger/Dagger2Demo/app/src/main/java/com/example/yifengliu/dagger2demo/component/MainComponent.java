@@ -1,9 +1,10 @@
 package com.example.yifengliu.dagger2demo.component;
 
 import com.example.yifengliu.dagger2demo.MainApplication;
-import com.example.yifengliu.dagger2demo.MainGraph;
 import com.example.yifengliu.dagger2demo.module.ApiModule;
 import com.example.yifengliu.dagger2demo.module.MainModule;
+import com.example.yifengliu.dagger2demo.view.activity.MainActivity;
+import com.example.yifengliu.dagger2demo.view.activity.ReposListActivity;
 
 import javax.inject.Singleton;
 
@@ -16,11 +17,12 @@ import dagger.Component;
  */
 @Singleton
 @Component(modules = {MainModule.class, ApiModule.class})
-public interface MainComponent extends MainGraph {
-    final class Initializer {
-        private Initializer() {
-        } // No instances.
+public interface MainComponent {
+    void inject(MainActivity mainActivity);
 
+    void inject(ReposListActivity reposListActivity);
+
+    final class Initializer {
         // 初始化组件
         public static MainComponent init(MainApplication app) {
             return DaggerMainComponent.builder()
