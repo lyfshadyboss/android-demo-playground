@@ -1,6 +1,6 @@
 package com.demo.lyf.compiler;
 
-import com.demo.lyf.annotation.PrintTest;
+import com.demo.lyf.annotation.CopyOnSave;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -20,7 +20,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
-import javax.tools.Diagnostic;
 
 /**
  * Created by yifengliu on 16/3/25.
@@ -43,22 +42,19 @@ public class AnnotationProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
         Messager messager = processingEnv.getMessager();
-        for (TypeElement te : annotations) {
-            for (Element e : env.getElementsAnnotatedWith(te)) {
-                messager.printMessage(Diagnostic.Kind.NOTE, "Printing: " + e.toString());
+        for (TypeElement typeElement : annotations) {
+            for (Element element : env.getElementsAnnotatedWith(typeElement)) {
+                // test generate java file
+                try {
+                    TypeSpec.Builder result = TypeSpec.classBuilder(element.getSimpleName().toString() + "Test");
+
+                    JavaFile.builder("com.demo.lyf.gen", result.build())
+                            .addFileComment("Generated code. Do not modify!")
+                            .build().writeTo(filer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-
-
-        // test write java file
-        try {
-            TypeSpec.Builder result = TypeSpec.classBuilder("foo");
-
-            JavaFile.builder("com.demo.lyf.gen", result.build())
-                    .addFileComment("Generated code. Do not modify!")
-                    .build().writeTo(filer);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return true;
@@ -68,7 +64,7 @@ public class AnnotationProcessor extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
 
-        types.add(PrintTest.class.getCanonicalName());
+        types.add(CopyOnSave.class.getCanonicalName());
 
         return types;
     }
