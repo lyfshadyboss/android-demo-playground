@@ -1,6 +1,6 @@
 package com.demo.lyf.compiler;
 
-import com.demo.lyf.annotation.CopyOnSave;
+import com.demo.lyf.annotation.Copy;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -64,7 +64,7 @@ public class AnnotationProcessor extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
 
-        types.add(CopyOnSave.class.getCanonicalName());
+        types.add(Copy.class.getCanonicalName());
 
         return types;
     }
