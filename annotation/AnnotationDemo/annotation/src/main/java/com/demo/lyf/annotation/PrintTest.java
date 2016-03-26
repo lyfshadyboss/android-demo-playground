@@ -1,4 +1,4 @@
-package com.demo.lyf.core;
+package com.demo.lyf.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

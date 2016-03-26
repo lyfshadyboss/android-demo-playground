@@ -1,6 +1,7 @@
-package com.demo.lyf.core.internal;
+package com.demo.lyf.compiler;
 
-import com.demo.lyf.core.PrintTest;
+import com.demo.lyf.annotation.PrintTest;
+import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 
@@ -12,6 +13,7 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
@@ -23,6 +25,7 @@ import javax.tools.Diagnostic;
 /**
  * Created by yifengliu on 16/3/25.
  */
+@AutoService(Processor.class)
 public class AnnotationProcessor extends AbstractProcessor {
     private Elements elementUtils;
     private Types typeUtils;
