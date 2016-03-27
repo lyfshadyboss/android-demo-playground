@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+    id 'net.ltgt.apt' version '0.3'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':app')
+    compile 'org.mapstruct:mapstruct:1.1.0.Beta1'
+    apt 'org.mapstruct:mapstruct-processor:1.1.0.Beta1'
+}
